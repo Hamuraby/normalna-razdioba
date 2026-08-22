@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#173b54">
+  <meta name="description" content="Istraži normalnu razdiobu, mijenjaj parametre i računaj vjerojatnosti.">
+  <title>Normalna razdioba — interaktivni laboratorij</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<main>
+  <section class="hero">
+    <nav class="topbar">
+      <div class="brand"><span class="brand-mark">N</span><span>Normalna razdioba</span></div>
+      <button class="ghost-button" id="reset" type="button">Vrati početne vrijednosti</button>
+    </nav>
+    <div class="hero-copy">
+      <p class="eyebrow">INTERAKTIVNI LABORATORIJ</p>
+      <h1>Površina ispod krivulje <em>jest</em> vjerojatnost.</h1>
+      <p>Mijenjaj parametre, odaberi područje i odmah vidi kako se račun povezuje sa zasjenjenim dijelom grafa.</p>
+    </div>
+  </section>
+
+  <section class="lab-section" aria-label="Interaktivni kalkulator normalne razdiobe">
+    <div class="control-panel">
+      <div class="panel-heading">
+        <div><p class="step-label">01 · RAZDIOBA</p><h2>Oblik krivulje</h2></div>
+        <span class="distribution-badge" id="distribution-badge">X ~ N(μ = 0,0; σ² = 1,00)</span>
+      </div>
+
+      <label class="range-control">
+        <span class="control-label"><span>Očekivanje <b>μ</b></span><output id="mu-output">0,0</output></span>
+        <input id="mu" type="range" value="0" min="-5" max="5" step="0.1">
+        <span class="control-help">Pomiče središte krivulje.</span>
+      </label>
+      <label class="range-control">
+        <span class="control-label"><span>Standardna devijacija <b>σ</b></span><output id="sigma-output">1,0</output></span>
+        <input id="sigma" type="range" value="1" min="0.3" max="4" step="0.1">
+        <span class="control-help">Određuje širinu i visinu krivulje.</span>
+      </label>
+
+      <div class="divider"></div>
+      <p class="step-label">02 · PODRUČJE</p>
+      <div class="mode-grid">
+        <button class="mode-button" data-mode="left" type="button"><span>Lijevo</span><small>P(X ≤ a)</small></button>
+        <button class="mode-button" data-mode="right" type="button"><span>Desno</span><small>P(X ≥ a)</small></button>
+        <button class="mode-button active" data-mode="between" type="button"><span>Između</span><small>P(a ≤ X ≤ b)</small></button>
+        <button class="mode-button" data-mode="outside" type="button"><span>Izvan</span><small>P(X ≤ a ili X ≥ b)</small></button>
+      </div>
+      <div class="bound-inputs">
+        <label><span>Granica a</span><input id="a" type="number" value="-1" step="0.1"></label>
+        <label id="b-wrap"><span>Granica b</span><input id="b" type="number" value="1" step="0.1"></label>
+      </div>
+      <p class="input-note hidden" id="input-note"></p>
+    </div>
+
+    <div class="visual-panel">
+      <div class="graph-topline">
+        <div><p class="step-label">03 · REZULTAT</p><h2 id="graph-heading">Površina između a i b</h2></div>
+        <div class="legend"><span></span> zasjenjena vjerojatnost</div>
+      </div>
+      <svg id="graph" class="distribution-graph" viewBox="0 0 820 330" role="img" aria-label="Graf normalne razdiobe sa zasjenjenom vjerojatnošću"></svg>
+      <div class="result-strip">
+        <div class="result-main">
+          <span id="probability-notation">P(a ≤ X ≤ b)</span>
+          <strong id="probability-value">0,6827</strong>
+          <small id="probability-percent">68,27%</small>
+        </div>
+        <div class="result-steps">
+          <span>Standardizacija</span>
+          <code id="za-line">z<sub>a</sub> = (a − μ) / σ = −1,00</code>
+          <code id="zb-line">z<sub>b</sub> = (b − μ) / σ = 1,00</code>
+          <code class="phi-line" id="phi-line">Φ(1,00) − Φ(−1,00) = 0,6827</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <div class="learn-intro">
+      <p class="step-label">KAKO ČITATI GRAF</p>
+      <h2>Tri ideje koje vrijedi zapamtiti</h2>
+      <p>Svaka promjena na grafu može se razumjeti kroz ove tri kratke poveznice.</p>
+    </div>
+    <div class="concept-grid">
+      <article><span>μ</span><h3>Središte</h3><p>Krivulja je simetrična oko očekivanja. Zato je uvijek P(X ≤ μ) = 0,5.</p></article>
+      <article><span>σ</span><h3>Raspršenost</h3><p>Veći σ širi krivulju. Ukupna površina ipak ostaje jednaka 1.</p></article>
+      <article><span>Φ</span><h3>Kumulativna površina</h3><p>Φ(z) daje površinu lijevo od z na standardnoj normalnoj razdiobi.</p></article>
+    </div>
+    <div class="rule-card">
+      <div><span class="rule-icon">68<br><small>%</small></span></div>
+      <div><h3>Pravilo 68–95–99,7</h3><p>Oko 68% vrijednosti je unutar μ ± σ, 95% unutar μ ± 2σ, a 99,7% unutar μ ± 3σ.</p></div>
+      <button id="show-one-sigma" type="button">Prikaži μ ± σ</button>
+    </div>
+  </section>
+</main>
+<script src="./app.js" defer></script>
+</body>
+</html>
